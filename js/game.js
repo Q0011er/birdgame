@@ -20,7 +20,7 @@ let score_mp3 = new Audio()
 fly_mp3.src = 'audio/fly.mp3'
 score_mp3.src = 'audio/score.mp3'
 
-let gap = 90
+let gap = 100
 
 let pipes = []
 pipes[0] = {
@@ -28,14 +28,17 @@ pipes[0] = {
     y : 0
 }
 
+let score = 0
+
+//bird param
 let xPosBird = 40
-let yPosBird = 180
-let grav = 1;
+let yPosBird = 200
+let grav = 1.5;
 
 document.addEventListener("keydown", moveUp)
 
 function moveUp() {
-    yPosBird -=20
+    yPosBird -=30
 }
 
 function draw() {
@@ -53,11 +56,25 @@ function draw() {
             })
         }
 
+        if((xPosBird + bird.width >= pipes[i].x)
+            && (xPosBird <= pipes[i].x + pipeUp.width)
+            && (yPosBird <= pipes[i].y + pipeUp.height
+            || yPosBird + bird.height >= pipes[i].y + pipeUp.height + gap) || (yPosBird+bird.height >= cvs.height-fg.height)) {
+                location.reload(); // Перезагрузка страницы
+        }
+
+        if(pipes[i].x == 5) {
+            score++
+        }
 
     }
     ctx.drawImage(fg, 0, cvs.height-fg.height)
     ctx.drawImage(bird, xPosBird, yPosBird)
     yPosBird +=grav
+
+    ctx.fillStyle = "#000"
+    ctx.font = "24px Verdana"
+    ctx.fillText("Счет: " + score, 10, cvs.height - 20)
 
     requestAnimationFrame(draw)
 }
