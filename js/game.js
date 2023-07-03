@@ -33,12 +33,12 @@ let score = 0
 //bird param
 let xPosBird = 40
 let yPosBird = 200
-let grav = 1.5;
+let grav = 1.5
 
 document.addEventListener("keydown", moveUp)
 
 function moveUp() {
-    yPosBird -=30
+    yPosBird -=15
 }
 
 function draw() {
